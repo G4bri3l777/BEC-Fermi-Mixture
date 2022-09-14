@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --mail-user=gabriel-cofre@oist.jp
+#SBATCH --mail-type=BEGIN,FAIL,END
+
+# give the job a name  
+#SBATCH --job-name=mlab_test
+
+# specify the computing partition (short or compute)
+#SBATCH --partition=compute
+
+# specify the number of tasks
+#SBATCH --ntasks=1
+
+# specify the number of cores per tasks (the maximum value is 128)
+#SBATCH --cpus-per-task=100
+
+# specify the amount of ram you need (the maximum available ram is 500G)
+#SBATCH --mem=400G 
+#--mem-per-cpu=2G specifies the amount of ram per core
+
+# specify the amount of time. days-hours:minutes:seconds
+#SBATCH --time=02-00:00:00
+
+# load the computing module
+module load matlab/R2020b
+
+# matlab program without "-nojvm", since we need java for this toolbox
+mlab_cmd="matlab -nosplash -nodisplay -nodesktop"
+
+# Run matlab on your script
+${mlab_cmd} -r "mix_run;"
